@@ -1,30 +1,33 @@
 {
   "name": "candy-maker-api",
   "version": "1.0.0",
-  "description": "## Part One Instructions In the initial commit of this project you were provided with the SQL to create a database of candies with their manufacturers. Working in a brach called `part-one-answer`, your task is to implement an Express driven REST API that allows a user to retrieve this data. Your API should support the routes listed below, pulling the data from the database via Sequelize models.",
+  "description": "## Instructions",
   "main": ".eslintrc.js",
   "scripts": {
-    "dev": "./node_modules/.bin/nodemon index.js",
+    "dev": "./node_modules/.bin/env-cmd ./node_modules/.bin/nodemon index.js",
+    "dev:migrate": "./node_modules/.bin/env-cmd ./node_modules/.bin/sequelize db:migrate --env development --config ./configs/sequelize.js",
     "lint": "./node_modules/.bin/eslint --format codeframe .",
     "lint:fix": "./node_modules/.bin/eslint --fix --format codeframe ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prodxxx/candy-maker-api.git"
+    "url": "git+https://github.com/stackeducation/candy-maker-api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/prodxxx/candy-maker-api/issues"
+    "url": "https://github.com/stackeducation/candy-maker-api/issues"
   },
-  "homepage": "https://github.com/prodxxx/candy-maker-api#readme",
+  "homepage": "https://github.com/stackeducation/candy-maker-api#readme",
   "dependencies": {
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
-    "sequelize": "^5.21.7"
+    "sequelize": "^5.21.5",
+    "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.2"
   }
 }

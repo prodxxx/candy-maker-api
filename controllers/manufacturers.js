@@ -1,21 +1,21 @@
 const models = require('../models')
 
-const getAllManufacturersWithAllProducts = async (request, response) => {
-  const manufacturers = await models.manufacturers.findAll({
+const getAllManufacturers = async (request, response) => {
+  const manufacturers = await models.Manufacturers.findAll({
     include: [{ model: models.Products }]
   })
 
   return response.send(manufacturers)
 }
 
-const getManufacturerWithProductsById = async (request, response) => {
-  const { id } = request.params
+const getManufacturerById = async (request, response) => {
+  const { name } = request.params
 
-
-
-  const manufacturer = await models.manufacturers.findOne({
-    where: { id },
-    include: [{ model: models.products }]
+  const manufacturer = await models.Manufacturers.findOne({
+    where: {
+      name: { [models.Op.like]: `%${name}%` },
+    },
+    include: [{ model: models.Products }]
   })
 
   return manufacturer
@@ -23,4 +23,4 @@ const getManufacturerWithProductsById = async (request, response) => {
     : response.sendStatus(404)
 }
 
-module.exports = { getAllManufacturersWithAllProducts, getManufacturerWithProductsById }
+module.exports = { getAllManufacturers, getManufacturerById }

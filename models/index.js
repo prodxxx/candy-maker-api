@@ -1,19 +1,23 @@
 const Sequelize = require('sequelize')
-const ProductsModel = require('./products')
+const allConfigs = require('../configs/sequelize')
 const ManufacturersModel = require('./manufacturers')
+const ProductsModel = require('./products')
 
-const connection = new Sequelize('candies', 'candies', 'C4nd13$!', {
-  host: 'localhost', dialect: 'mysql'
+const environment = process.env.NODE_ENV || 'development'
+const config = allConfigs[environment]
+
+const connection = new Sequelize(config.database, config.username, config.password, {
+  host: config.host, dialect: config.dialect,
 })
 
-const manufacturers = ManufacturersModel(connection, Sequelize)
-const products = ProductsModel(connection, Sequelize, manufacturers)
+const Manufacturers = ManufacturersModel(connection, Sequelize)
+const Products = ProductsModel(connection, Sequelize, Manufacturers)
 
-
-manufacturers.hasMany(products)
-products.belongsTo(manufacturers)
+Products.belongsTo(Manufacturers)
+Manufacturers.hasMany(Products)
 
 module.exports = {
-  products,
-  manufacturers
+  Manufacturers,
+  Products,
+  Op: Sequelize.Op,
 }
